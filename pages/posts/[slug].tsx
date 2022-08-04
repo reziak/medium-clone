@@ -2,12 +2,14 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
 import { sanityClient, urlFor } from "../../sanity"
-import { Post, RawPost } from "../../typings"
+import { Comment, Post, RawPost } from "../../typings"
 import PortableText from 'react-portable-text'
+import { CommentForm } from "../../components/CommentForm"
+import { CommentsList } from "../../components/CommentsList"
 
 interface SinglePostProps {
   post: Post
-  comments: object[]
+  comments: Comment[]
 }
 
 const SinglePost = ({ post, comments }: SinglePostProps) => {
@@ -70,6 +72,11 @@ const SinglePost = ({ post, comments }: SinglePostProps) => {
           />
         </div>
       </article>
+      <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
+      <CommentForm postId={post.id} />
+      {comments && (
+        <CommentsList comments={comments} />
+      )}
     </main>
   )
 }
